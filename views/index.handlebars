@@ -10,12 +10,21 @@
     </div>
   </div>
 </nav>
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid" style="margin-bottom: 0px !important;">
   <div class="container">
-    <h1 class="display-4">News Scrapper</h1>
+    <h1 class="display-4">Javscript News Scrapper</h1>
     <p class="lead">This web application with scrap articles from _______ and you will be able to save the articles to be visited again and to write notes on.</p>
   </div>
 </div>
-<div class="container-fluid">
-
+<div class="container-fluid p-4" style="background-color: aquamarine;">
+  {{#each results}}
+    <div class="card mb-4">
+      <div class="card-header bg-info">
+        <a style="color: white;" href={{this.link}}>{{this.header}}</a>
+      </div>
+      <div class="card-body">
+        <p>{{this.bio}}</p>
+      </div>
+    </div>
+  {{/each}}
 </div>
