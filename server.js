@@ -12,7 +12,8 @@ const PORT = process.env.PORT || 3000;
 
 // Initialize Express
 const app = express();
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/news_db";
+// const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/news_db";
+const MONGODB_URI = "mongodb://localhost/news_db";
 
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
@@ -23,12 +24,22 @@ app.set("view engine", "handlebars");
 
 mongoose.connect(MONGODB_URI);
 
-// db.User.findOneAndUpdate();
-
 app.get("/", (req, res) => {
+  db.Article.find({}).lean().then(data => {
+    console.log(data);
+    res.render("index", { results: data });
+  }).catch(err => {
+    console.log(err);
+  })
+});
+
+app.get("/saved", (req, res) => {
+  res.render("saved");
+});
+
+app.get("/scrape", (req, res) => {
   axios.get("https://www.infoworld.com/category/javascript/").then(response => {
     const $ = cheerio.load(response.data);
-    const results = [];
 
     $(".river-well.article").each(function(i, element) {
       const article = {};
@@ -41,15 +52,14 @@ app.get("/", (req, res) => {
       // Article Header
       article.header = $(this).children(".post-cont").children("h3").children().text();
 
-      results.push(article);
+      db.Article.create(article).then(dbArticle => {
+        console.log(dbArticle);
+      }).catch(err => {
+        console.log(err);
+      });
     });
-    console.log(results);
-    res.render("index", { results: results });
+    res.send("Scrape completed");
   });
-});
-
-app.get("/saved", (req, res) => {
-  res.render("saved");
 });
 
 app.listen(PORT, () => {
