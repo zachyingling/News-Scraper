@@ -1,5 +1,11 @@
 $(document).ready(() => {
   $("#saveArticle").on("click", function(){
-    console.log(this.attributes["data-id"].value);
+    $.ajax({
+      type: "POST",
+      url: "/saved",
+      data: this.attributes["data-id"].value,
+    }).done(function() {
+      console.log("done");
+    });
   });
 });

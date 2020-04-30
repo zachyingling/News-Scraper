@@ -17,5 +17,13 @@
   </div>
 </div>
 <div class="container-fluid">
-
+  {{#each results}}
+    <div class="card mb-4">
+      <div class="card-header bg-info">
+        <a style="color: white;" href={{this.link}}>{{this.header}}</a>
+      </div>
+      <div class="card-body">
+        <p>{{this.bio}}</p>
+      </div>
+    </div>
 </div>

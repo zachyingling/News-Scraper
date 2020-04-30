@@ -12,8 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 // Initialize Express
 const app = express();
-// const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/news_db";
-const MONGODB_URI = "mongodb://localhost/news_db";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/news_db";
 
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
@@ -30,11 +29,24 @@ app.get("/", (req, res) => {
     res.render("index", { results: data });
   }).catch(err => {
     console.log(err);
-  })
+  });
 });
 
 app.get("/saved", (req, res) => {
-  res.render("saved");
+  db.Article.find({ saved: true }).lean().then(data => {
+    // console.log(data);
+    res.render("index", { results: data });
+  }).catch(err => {
+    console.log(err);
+  });
+});
+
+app.post("/saved", (req, res) => {
+  let dataID = Object.getOwnPropertyNames(req.body);
+  // console.log(dataID[0]);
+  db.Article.updateOne({ _id: dataID[0]}, { $set: { saved: true }}).then(() => {
+    res.redirect("/");
+  });
 });
 
 app.get("/scrape", (req, res) => {
