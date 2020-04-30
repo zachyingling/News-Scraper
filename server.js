@@ -25,7 +25,7 @@ app.set("view engine", "handlebars");
 mongoose.connect(MONGODB_URI);
 
 app.get("/", (req, res) => {
-  db.Article.find({}).lean().then(data => {
+  db.Article.find({ saved: false }).lean().then(data => {
     console.log(data);
     res.render("index", { results: data });
   }).catch(err => {
@@ -38,6 +38,12 @@ app.get("/saved", (req, res) => {
 });
 
 app.get("/scrape", (req, res) => {
+  db.Article.deleteMany({ saved: false }, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+  });
+
   axios.get("https://www.infoworld.com/category/javascript/").then(response => {
     const $ = cheerio.load(response.data);
 
