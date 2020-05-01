@@ -25,7 +25,6 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
 
 app.get("/", (req, res) => {
   db.Article.find({ saved: false }).lean().then(data => {
-    console.log(data);
     res.render("index", { results: data });
   }).catch(err => {
     console.log(err);
@@ -34,7 +33,6 @@ app.get("/", (req, res) => {
 
 app.get("/saved", (req, res) => {
   db.Article.find({ saved: true }).lean().then(data => {
-    // console.log(data);
     res.render("saved", { results: data });
   }).catch(err => {
     console.log(err);
@@ -42,9 +40,8 @@ app.get("/saved", (req, res) => {
 });
 
 app.post("/saved", (req, res) => {
-  let dataID = Object.getOwnPropertyNames(req.body);
-  // console.log(dataID[0]);
-  db.Article.updateOne({ _id: dataID[0]}, { $set: { saved: true }}).then(() => {
+  const dataID = Object.getOwnPropertyNames(req.body);
+  db.Article.updateOne({ _id: dataID[0]}, { $set: { saved: true }}).then(function() {
     // Isn't working needs to refresh the page annd go to home route
     res.redirect("/");
   });
