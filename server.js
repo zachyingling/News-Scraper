@@ -84,7 +84,7 @@ app.get("/scrape", (req, res) => {
         console.log(err);
       });
     });
-    res.send("Scrape completed");
+    res.send("<h1>Scrape completed</h1><br /><a href='/'>CLICK ME TO GO BACK HOME</a>");
   });
 });
 
