@@ -10,13 +10,14 @@
     </div>
   </div>
 </nav>
-<div class="jumbotron jumbotron-fluid" style="margin-bottom: 0px !important;">
+<div class="jumbotron jumbotron-fluid" style="margin-bottom: 0px !important;background-color:cornflowerblue;">
   <div class="container">
     <h1 class="display-4">Saved Articles</h1>
     <p class="lead">Articles Saved</p>
   </div>
 </div>
 <div class="container-fluid p-4" style="background-color: aquamarine;">
+  {{#if results}}
   {{#each results}}
     <div class="card mb-4">
       <div class="card-header bg-info">
@@ -28,5 +29,8 @@
       </div>
     </div>
   {{/each}}
+  {{else}}
+  <h1>No Saved Articles</h1>
+  {{/if}}
 </div>
 <script src="js/front.js"></script>
