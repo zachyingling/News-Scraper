@@ -21,6 +21,7 @@
     <div class="card mb-4">
       <div class="card-header bg-info">
         <a style="color: white;" href={{this.link}}>{{this.header}}</a>
+        <button type="button" data-id={{this._id}} class="btn btn-danger" id="unsaveArticle">Unsave Article</button>
       </div>
       <div class="card-body">
         <p>{{this.bio}}</p>
@@ -28,3 +29,4 @@
     </div>
   {{/each}}
 </div>
+<script src="js/front.js"></script>

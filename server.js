@@ -31,6 +31,14 @@ app.get("/", (req, res) => {
   });
 });
 
+app.post("/", (req, res) => {
+  const dataID = Object.getOwnPropertyNames(req.body);
+  db.Article.updateOne({ _id: dataID[0] }, { $set: { saved: false }}).then(function() {
+    // Isn't working needs to refresh the page annd go to home route
+    res.redirect("/saved");
+  });
+});
+
 app.get("/saved", (req, res) => {
   db.Article.find({ saved: true }).lean().then(data => {
     res.render("saved", { results: data });
