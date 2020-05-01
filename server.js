@@ -21,7 +21,7 @@ app.use(express.static("public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.get("/", (req, res) => {
   db.Article.find({ saved: false }).lean().then(data => {
@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 app.get("/saved", (req, res) => {
   db.Article.find({ saved: true }).lean().then(data => {
     // console.log(data);
-    res.render("index", { results: data });
+    res.render("saved", { results: data });
   }).catch(err => {
     console.log(err);
   });
@@ -45,6 +45,7 @@ app.post("/saved", (req, res) => {
   let dataID = Object.getOwnPropertyNames(req.body);
   // console.log(dataID[0]);
   db.Article.updateOne({ _id: dataID[0]}, { $set: { saved: true }}).then(() => {
+    // Isn't working needs to refresh the page annd go to home route
     res.redirect("/");
   });
 });
