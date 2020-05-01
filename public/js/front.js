@@ -2,9 +2,11 @@ $(document).ready(() => {
   $("#saveArticle").on("click", function(){
     $.ajax({
       type: "POST",
-      url: "/saved",
+      url: "/",
       data: this.attributes["data-id"].value
     }).done(function() {
+      // Reloads page after call is done
+      window.location.reload();
       console.log("done");
     });
   });
@@ -12,9 +14,11 @@ $(document).ready(() => {
   $("#unsaveArticle").on("click", function(){
     $.ajax({
       type: "POST",
-      url: "/",
+      url: "/saved",
       data: this.attributes["data-id"].value
     }).done(function() {
+      // Reloads page after call is done
+      window.location.reload();
       console.log("done");
     });
   });

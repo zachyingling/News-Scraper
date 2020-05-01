@@ -31,10 +31,11 @@ app.get("/", (req, res) => {
   });
 });
 
-app.post("/", (req, res) => {
+app.post("/saved", (req, res) => {
   const dataID = Object.getOwnPropertyNames(req.body);
-  db.Article.updateOne({ _id: dataID[0] }, { $set: { saved: false }}).then(function() {
+  db.Article.updateOne({ _id: dataID[0] }, { $set: { saved: false }}).then(data => {
     // Isn't working needs to refresh the page annd go to home route
+    console.log(data);
     res.redirect("/saved");
   });
 });
@@ -47,16 +48,17 @@ app.get("/saved", (req, res) => {
   });
 });
 
-app.post("/saved", (req, res) => {
+app.post("/", (req, res) => {
   const dataID = Object.getOwnPropertyNames(req.body);
-  db.Article.updateOne({ _id: dataID[0]}, { $set: { saved: true }}).then(function() {
+  db.Article.updateOne({ _id: dataID[0]}, { $set: { saved: true }}).then(data => {
     // Isn't working needs to refresh the page annd go to home route
+    console.log(data);
     res.redirect("/");
   });
 });
 
 app.get("/scrape", (req, res) => {
-  db.Article.deleteMany({ saved: false }, (err, result) => {
+  db.Article.deleteMany({}, (err, result) => {
     if (err) {
       res.send(err);
     }
