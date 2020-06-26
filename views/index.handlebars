@@ -10,10 +10,10 @@
     </div>
   </div>
 </nav>
-<div class="jumbotron jumbotron-fluid" style="margin-bottom: 0px !important;background-color:cornflowerblue;">
+<div class="jumbotron jumbotron-fluid" style="margin-bottom: 0px !important;background-image: url('js-image.jpg');">
   <div class="container">
-    <h1 class="display-4">Javascript News Scrapper</h1>
-    <p class="lead">This web application with scrap articles from <span><a style="color: white;" href="https://www.infoworld.com/category/javascript/">https://www.infoworld.com/category/javascript/</a></span> and you will be able to save the articles to be visited again and to write notes on.</p>
+    <h1 class="display-4" style="color: white; font-weight: bold; font-family: 'Crimson Text', serif;">Javascript News Scrapper</h1>
+    <p class="lead" style="color: white; font-weight: bold; font-family: 'Crimson Text', serif;">This web application with scrap articles from <span><a style="color:aqua;" href="https://www.infoworld.com/category/javascript/">https://www.infoworld.com/category/javascript/</a></span> and you will be able to save the articles to be visited again and to write notes on.</p>
     <br/>
     <a class="btn btn-danger" href="/scrape" role="button">Click to Delete ALL articles and scrap new ones</a>
   </div>
@@ -22,7 +22,7 @@
   {{#each results}}
     <div class="card mb-4">
       <div class="card-header bg-info">
-        <a style="color: white;" href={{this.link}}>{{this.header}}</a>
+        <a style="color: white; font-weight: bold; margin-right: 10px; font-family: 'Crimson Text', serif; font-size: 1.3rem;" href={{this.link}}>{{this.header}}</a>
         <button type="button" data-id={{this._id}} class="btn btn-danger" id="saveArticle">Save Article</button>
       </div>
       <div class="card-body">
